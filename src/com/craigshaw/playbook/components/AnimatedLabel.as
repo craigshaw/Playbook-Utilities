@@ -8,7 +8,7 @@ package com.craigshaw.playbook.components
 	import flash.text.TextFormat;
 	
 	/**
-	 * Animated label class. Extends the QNX container and *must* be explicitly sized via the constructor. The idea is to make a label like the iPhone
+	 * Animated label class. *must* be explicitly sized via the constructor. The idea was to make a label like the iPhone
 	 * one that scrolls when text is too big to fit in it.
 	 * Provides some default tweening behaviour at the moment, but this could easily be extended if needs be
 	 * @author craigs
