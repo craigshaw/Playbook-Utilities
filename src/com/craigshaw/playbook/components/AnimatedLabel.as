@@ -46,8 +46,7 @@ package com.craigshaw.playbook.components
 			
 			// Now create the label
 			_innerTextField = new TextField();
-			_innerTextField.autoSize = TextFieldAutoSize.CENTER;
-			_innerTextField.border = true;
+			_innerTextField.autoSize = TextFieldAutoSize.LEFT;
 			_innerTextField.x = 0;
 			_innerTextField.y = 0;
 			if(textFormat)
