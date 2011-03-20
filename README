@@ -1,0 +1,5 @@
+Basic set of utilities for use with the Blackberry Playbook Actionscript SDK. These have evolved from a bunch of classes that I've used over a few basic Playbook applications. I figured to ease reuse I may as well put them in a library and get them out there for others to use and imporve.
+
+The library currently contains:
+- View management tools (com.craigshaw.playbook.view)
+- Scrolling label control
