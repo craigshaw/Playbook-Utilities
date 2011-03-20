@@ -83,9 +83,6 @@ package com.craigshaw.playbook.view
 				if(viewData && _currentView is IDataView)
 					IDataView(_currentView).viewData = viewData;
 				
-				// Wire events ... TODO: ?
-				//_currentView.addEventListener(ViewChangeEvent.VIEW_CHANGE, onViewChangeEvent, false, 0, true);
-				
 				// Add to the display list
 				_viewContainer.addChild(_currentView);
 				
@@ -138,17 +135,18 @@ package com.craigshaw.playbook.view
 				{
 					Tweener.addTween(_currentView, 
 						{
-							alpha: 0,
-							time : 0.25
+							y    : this._containerHeight,
+							time : 0.5
 						});
 				}
 				
 				// Now tween the new view in
+				incomingView.y = 0 - this._containerHeight;
 				Tweener.addTween(incomingView,
 					{
-						alpha: 1,
-						time : 0.25,
-						onComplete:function():void
+						y          : 0,
+						time       : 0.5,
+						onComplete :function():void
 						{
 							if (_currentView)
 								_viewContainer.removeChild(_currentView);
