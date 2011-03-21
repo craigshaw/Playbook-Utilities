@@ -1,5 +1,10 @@
 package com.craigshaw.playbook.view
 {
+	/**
+	 * Defines the available transitions for use with the ViewManager 
+	 * @author craigs
+	 * 
+	 */	
 	public final class ViewManagerTransition
 	{
 		/**

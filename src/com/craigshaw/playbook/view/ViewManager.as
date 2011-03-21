@@ -26,7 +26,6 @@ package com.craigshaw.playbook.view
 		private var _currentView:UIComponent;				// Reference to the current managed view that is on the display
 		private var _containerWidth:int;					// Width of the container that our views will reside in
 		private var _containerHeight:int;					// Height of the container that our views will reside in
-		//private var _transitionMap:Object = {};				// Map of transition names to transition definitions
 		
 		/**
 		 * Constructor. Creates a new instance the manages the views that can be selected within the given DisplayObjectContainer 
