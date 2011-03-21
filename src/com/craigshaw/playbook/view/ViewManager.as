@@ -2,6 +2,8 @@ package com.craigshaw.playbook.view
 {
 	import caurina.transitions.Tweener;
 	
+	import com.craigshaw.playbook.view.ViewManagerTransition;
+	
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	
@@ -16,11 +18,15 @@ package com.craigshaw.playbook.view
 	 */	
 	public class ViewManager
 	{
+		private const In:String = "in";
+		private const Out:String = "out";
+		
 		private var _views:Object = {};						// Map of view names to views
 		private var _viewContainer:DisplayObjectContainer;	// Reference to the outer container to which the managed views will be added/removed
 		private var _currentView:UIComponent;				// Reference to the current managed view that is on the display
-		private var _containerWidth:int;
-		private var _containerHeight:int;
+		private var _containerWidth:int;					// Width of the container that our views will reside in
+		private var _containerHeight:int;					// Height of the container that our views will reside in
+		//private var _transitionMap:Object = {};				// Map of transition names to transition definitions
 		
 		/**
 		 * Constructor. Creates a new instance the manages the views that can be selected within the given DisplayObjectContainer 
@@ -108,7 +114,7 @@ package com.craigshaw.playbook.view
 		 * @return true if the new view was created, false otherwise 
 		 * 
 		 */		
-		public function switchViewWithTween(viewName:String, viewData:Object=null):Boolean
+		public function switchViewWithTransition(viewName:String, transition:String, viewData:Object=null, duration:Number = 0.5):Boolean
 		{
 			if( viewName in _views)
 			{
@@ -121,7 +127,7 @@ package com.craigshaw.playbook.view
 					IDataView(incomingView).viewData = viewData;
 
 				// Initialise new view for the appropriate tween
-				incomingView.alpha = 0;
+				initialiseViewForTransition(incomingView, transition);
 				
 				// Add it to the display list
 				_viewContainer.addChild(incomingView);
@@ -132,33 +138,71 @@ package com.craigshaw.playbook.view
 				
 				// Trigger the tween to move the current view out
 				if(_currentView)
-				{
-					Tweener.addTween(_currentView, 
-						{
-							y    : this._containerHeight,
-							time : 0.5
-						});
-				}
+					Tweener.addTween(_currentView, createTweenParametersForTransition(transition, duration, Out));
 				
-				// Now tween the new view in
-				incomingView.y = 0 - this._containerHeight;
-				Tweener.addTween(incomingView,
-					{
-						y          : 0,
-						time       : 0.5,
-						onComplete :function():void
-						{
-							if (_currentView)
-								_viewContainer.removeChild(_currentView);
-								
-							_currentView = incomingView;
-						}
-					});
+				
+				// Now tween it in
+				var tweenParams:Object = createTweenParametersForTransition(transition, duration, In);
+				tweenParams.onComplete = function():void
+				{
+					if (_currentView)
+						_viewContainer.removeChild(_currentView);
+					
+					_currentView = incomingView;
+				};
+				Tweener.addTween(incomingView, tweenParams);
 				
 				return true;
 			}
 			
 			return false;
+		}
+		
+		/**
+		 * Creates an object with the tween parameters for the appropriate transition 
+		 * @param transition The required transition
+		 * @param duration The duration of the transition
+		 * @param direction The direction of the transition In or Out
+		 * @return object containing tween params
+		 * 
+		 */		
+		private function createTweenParametersForTransition(transition:String, duration:Number, direction:String):Object
+		{
+			var tweenParams:Object = {};
+			tweenParams.time = duration;
+			
+			if(transition == ViewManagerTransition.FadeInOut)
+				tweenParams.alpha = (direction == Out)?0:1;
+			else if(transition == ViewManagerTransition.WipeLeft)
+				tweenParams.x = (direction == Out)?0-this._containerWidth:0;
+			else if(transition == ViewManagerTransition.WipeRight)
+				tweenParams.x = (direction == Out)?this._containerWidth:0;
+			else if(transition == ViewManagerTransition.WipeUp)
+				tweenParams.y = (direction == Out)?0-this._containerHeight:0;
+			else if(transition == ViewManagerTransition.WipeDown)
+				tweenParams.y = (direction == Out)?this._containerHeight:0;
+			
+			return tweenParams;
+		}
+		
+		/**
+		 * Initialises the properties of the incoming view for its transition 
+		 * @param incomingView The incoming view
+		 * @param transition The transition required
+		 * 
+		 */		
+		private function initialiseViewForTransition(incomingView:UIComponent, transition:String):void
+		{
+			if(transition == ViewManagerTransition.FadeInOut)
+				incomingView.alpha = 0;
+			else if(transition == ViewManagerTransition.WipeLeft)
+				incomingView.x = this._containerWidth;
+			else if(transition == ViewManagerTransition.WipeRight)
+				incomingView.x = 0;
+			else if(transition == ViewManagerTransition.WipeUp)
+				incomingView.y = this._containerHeight;
+			else if(transition == ViewManagerTransition.WipeDown)
+				incomingView.y = 0;
 		}
 		
 		/**

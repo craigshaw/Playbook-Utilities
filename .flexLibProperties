@@ -2,6 +2,7 @@
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="true" version="3">
   <includeClasses>
     <classEntry path="com.craigshaw.playbook.view.IDataView"/>
+    <classEntry path="com.craigshaw.playbook.view.ViewManagerTransition"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
