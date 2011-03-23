@@ -109,7 +109,9 @@ package com.craigshaw.playbook.view
 		 * we clean up first. It shouldn't be an issue now I've made the transition 250ms but it would be slicker to fix it. Next version though!
 		 * 
 		 * @param viewName The name of the view to display
-		 * @param viewData Data object to be passed to the created view
+   * @param transition The name of the transition to apply when switching views. Available transitions defined in ViewManagerTransition
+		 * @param viewData Optional. View data that will be passed through to the view if the named view implements IDataView
+   * @param duration Optional. Duration of the transition (in seconds) 
 		 * @return true if the new view was created, false otherwise 
 		 * 
 		 */		

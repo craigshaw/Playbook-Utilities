@@ -1,9 +1,20 @@
-Basic set of utilities for use with the Blackberry Playbook Actionscript SDK. These have evolved from a bunch of classes that I've used over a few basic Playbook applications. I figured to ease reuse I may as well put them in a library and get them out there for others to use and improve.
+Basic set of utilities for use with the Blackberry Playbook Actionscript SDK. 
+These have evolved from a bunch of classes that I've used to help me with a few basic Playbook applications. I figured to ease reuse I may as 
+well put them in a library and get them out there for others to use and improve.
 
 The library currently contains:
 - View management tools        (com.craigshaw.playbook.view)
-- Scrolling label control      
+- Scrolling label control      (com.craigshaw.playbook.components)
 
+Usage:
+It's a basic Flex Library Project that links against the Blackberry Playbook SDK libraries. To use it, simply pull the latest version of the source
+and then import into Flex Builder. You might have to update the compiler settings to point to your Playbook libraries. On my machine as I write this, they are the 
+SWC at
 
-Using the library
-It's a basic Flex Library Project that links against the Blackberry Playbook SDK libraries. To use it, simple pull the latest version of the source and then import into Flex Builder.
+C:\Program Files\Adobe\Flash Builder Burrito\Adobe Flash Builder Burrito\sdks\blackberry-tablet-sdk-0.9.3\frameworks\libs\air\qnx-air.swc
+
+and the SWC folder at
+
+C:\Program Files\Adobe\Flash Builder Burrito\Adobe Flash Builder Burrito\sdks\blackberry-tablet-sdk-0.9.3\frameworks\libs\qnx-screen
+ 
+Create a new Blackberry project and add a reference to the PlaybookUtilities project through the compiler settings. Then you're good to go. Enjoy!
