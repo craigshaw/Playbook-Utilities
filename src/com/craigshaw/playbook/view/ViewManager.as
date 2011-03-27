@@ -9,7 +9,6 @@ package com.craigshaw.playbook.view
 	
 	import qnx.ui.core.Container;
 	import qnx.ui.core.IContainable;
-	import qnx.ui.core.UIComponent;
 
 	/**
 	 * Utility class for managing views 
@@ -23,7 +22,7 @@ package com.craigshaw.playbook.view
 		
 		private var _views:Object = {};						// Map of view names to views
 		private var _viewContainer:DisplayObjectContainer;	// Reference to the outer container to which the managed views will be added/removed
-		private var _currentView:UIComponent;				// Reference to the current managed view that is on the display
+		private var _currentView:DisplayObjectContainer;	// Reference to the current managed view that is on the display
 		private var _containerWidth:int;					// Width of the container that our views will reside in
 		private var _containerHeight:int;					// Height of the container that our views will reside in
 		
@@ -121,7 +120,7 @@ package com.craigshaw.playbook.view
 			{
 				// Create the new view
 				var uiClass : Class = Class(_views[viewName]);
-				var incomingView : UIComponent = new uiClass();
+				var incomingView : DisplayObjectContainer = new uiClass();
 				
 				// Set its data if we need to
 				if( viewData && incomingView is IDataView) 
@@ -192,7 +191,7 @@ package com.craigshaw.playbook.view
 		 * @param transition The transition required
 		 * 
 		 */		
-		private function initialiseViewForTransition(incomingView:UIComponent, transition:String):void
+		private function initialiseViewForTransition(incomingView:DisplayObjectContainer, transition:String):void
 		{
 			if(transition == ViewManagerTransition.FadeInOut)
 				incomingView.alpha = 0;
@@ -211,7 +210,7 @@ package com.craigshaw.playbook.view
 		 * @return 
 		 * 
 		 */		
-		public function get currentView():UIComponent
+		public function get currentView():DisplayObjectContainer
 		{
 			return _currentView;
 		}
