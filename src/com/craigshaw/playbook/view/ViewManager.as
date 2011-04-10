@@ -104,19 +104,17 @@ package com.craigshaw.playbook.view
 		 * Provides a simple full screen view switching mechanism using a tween to animate to the new view. 
 		 * Creates the named view (if available), supplies it with the viewData (if available)
 		 * and then adds it to the display list. Also removes any current view from the display list 
-		 * TODO: We should probably make this a little more defensive. So if a switch is triggered whilst a previous tween is active,
-		 * we clean up first. It shouldn't be an issue now I've made the transition 250ms but it would be slicker to fix it. Next version though!
 		 * 
 		 * @param viewName The name of the view to display
-   * @param transition The name of the transition to apply when switching views. Available transitions defined in ViewManagerTransition
+         * @param transition The name of the transition to apply when switching views. Available transitions defined in ViewManagerTransition
 		 * @param viewData Optional. View data that will be passed through to the view if the named view implements IDataView
-   * @param duration Optional. Duration of the transition (in seconds) 
+   		 * @param duration Optional. Duration of the transition (in seconds) 
 		 * @return true if the new view was created, false otherwise 
 		 * 
 		 */		
 		public function switchViewWithTransition(viewName:String, transition:String, viewData:Object=null, duration:Number = 0.5):Boolean
 		{
-			if( viewName in _views)
+			if(viewName in _views && !Tweener.isTweening(_currentView))
 			{
 				// Create the new view
 				var uiClass : Class = Class(_views[viewName]);
@@ -198,11 +196,11 @@ package com.craigshaw.playbook.view
 			else if(transition == ViewManagerTransition.WipeLeft)
 				incomingView.x = this._containerWidth;
 			else if(transition == ViewManagerTransition.WipeRight)
-				incomingView.x = 0;
+				incomingView.x = 0 - this._containerWidth;
 			else if(transition == ViewManagerTransition.WipeUp)
 				incomingView.y = this._containerHeight;
 			else if(transition == ViewManagerTransition.WipeDown)
-				incomingView.y = 0;
+				incomingView.y = 0 - this._containerHeight;
 		}
 		
 		/**
